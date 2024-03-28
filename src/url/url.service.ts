@@ -35,7 +35,7 @@ export class UrlService {
       }
     }
 
-    return `${this.configService.get<string>('BASE_URL')}/${urlPath}`;
+    return `${this.configService.get<string>('BASE_URL') ?? 'http://localhost:3000'}/${urlPath}`;
   }
 
   decode(urlPath: string): string | null {
