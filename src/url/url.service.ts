@@ -35,4 +35,13 @@ export class UrlService {
 
     return `http://localhost:3000/${urlPath}`;
   }
+
+  decode(urlPath: string): string | null {
+    const entry = this.urlDatabase[urlPath];
+    if (entry) {
+      entry.accessCount += 1;
+      return entry.originalUrl;
+    }
+    return null;
+  }
 }
