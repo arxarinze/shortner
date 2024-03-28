@@ -32,9 +32,10 @@ Before you begin, ensure you have the following installed on your system:
    yarn install
    ```
 3. Convert environment file:
-  ```bash
-  rename .env.example to .env
-  ```
+
+   ```bash
+   rename .env.example to .env
+   ```
 
 ### Running the Application
 
