@@ -22,4 +22,14 @@ export class AppController {
     }
     return { originalUrl };
   }
+  @Get('statistic/:urlPath')
+  getUrlStatistics(
+    @Param('urlPath') urlPath: string,
+  ): { originalUrl: string; accessCount: number } | { error: string } {
+    const stats = this.urlService.getStatistics(urlPath);
+    if (!stats) {
+      return { error: 'URL not found.' };
+    }
+    return stats;
+  }
 }

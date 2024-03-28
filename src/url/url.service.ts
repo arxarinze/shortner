@@ -44,4 +44,16 @@ export class UrlService {
     }
     return null;
   }
+
+  getStatistics(urlPath: string): UrlEntry | null {
+    const entry = this.urlDatabase[urlPath];
+    if (entry) {
+      return {
+        originalUrl: entry.originalUrl,
+        accessCount: entry.accessCount,
+        accessRecords: entry.accessRecords,
+      };
+    }
+    return null;
+  }
 }

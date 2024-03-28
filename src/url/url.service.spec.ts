@@ -39,4 +39,23 @@ describe('UrlService', () => {
       expect(service.decode('unknown')).toBeNull();
     });
   });
+  describe('getStatistics', () => {
+    it('should return statistics for a known URL', () => {
+      const originalUrl = 'http://example.com';
+      const shortUrl = service.encode(originalUrl);
+      const urlPath = shortUrl.replace('http://localhost:3000/', '');
+      service.decode(urlPath);
+
+      const stats = service.getStatistics(urlPath);
+      expect(stats).toEqual({
+        originalUrl: originalUrl,
+        accessCount: 1,
+        accessRecords: expect.any(Array),
+      });
+    });
+
+    it('should return null for an unknown URL', () => {
+      expect(service.getStatistics('unknown')).toBeNull();
+    });
+  });
 });

@@ -60,4 +60,24 @@ describe('AppController', () => {
       expect(urlService.decode).toHaveBeenCalledWith(urlPath);
     });
   });
+  describe('getUrlStatistics', () => {
+    it('should return URL statistics if found', async () => {
+      const urlPath = 'abc123';
+      const stats = { originalUrl: 'http://example.com', accessCount: 42 };
+      (urlService.getStatistics as jest.Mock).mockReturnValue(stats);
+
+      expect(await controller.getUrlStatistics(urlPath)).toEqual(stats);
+      expect(urlService.getStatistics).toHaveBeenCalledWith(urlPath);
+    });
+
+    it('should return an error if URL not found', async () => {
+      const urlPath = 'unknown';
+      (urlService.getStatistics as jest.Mock).mockReturnValue(null);
+
+      expect(await controller.getUrlStatistics(urlPath)).toEqual({
+        error: 'URL not found.',
+      });
+      expect(urlService.getStatistics).toHaveBeenCalledWith(urlPath);
+    });
+  });
 });
