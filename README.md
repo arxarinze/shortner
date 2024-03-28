@@ -7,6 +7,7 @@ This project is a simple URL shortening service built with Node.js and NestJS. I
 ### Prerequisites
 
 Before you begin, ensure you have the following installed on your system:
+
 - Node.js (v18.17.0 or later recommended)
 - npm (comes with Node.js)
 
@@ -24,25 +25,28 @@ Before you begin, ensure you have the following installed on your system:
    ```bash
    npm install
    ```
+
 # OR
 
     ```bash
-   yarn install
-   ```
+
+yarn install
+
+```
 
 ### Running the Application
 
 1. Start the application in development mode:
 
-   ```bash
-   npm run start:dev
-   ```
+```bash
+npm run start:dev
+```
 
-# OR
+### OR
 
-    ```bash
-   yarn run start:dev
-   ```
+```bash
+ yarn run start:dev
+```
 
 2. The service will be available at [http://localhost:3000](http://localhost:3000).
 
@@ -51,17 +55,17 @@ Before you begin, ensure you have the following installed on your system:
 The service provides the following endpoints:
 
 - **POST /url/encode**: Encodes a given URL to a shortened URL.
-  
+
   **Body**: `{ "url": "https://example.com" }`
-  
+
   **Response**: `{ "shortUrl": "http://short.est/abcd1234" }`
 
 - **GET /url/decode/:urlPath**: Decodes a shortened URL to its original URL.
-  
+
   **Response**: `{ "originalUrl": "https://example.com" }`
 
 - **GET /url/statistic/:urlPath**: Returns statistics for a shortened URL.
-  
+
   **Response**: `{ "originalUrl": "https://example.com", "accessCount": 5 }`
 
 - **GET /:urlPath**: Redirects to the original URL associated with the shortened path.
@@ -89,6 +93,7 @@ You can use tools like Postman or cURL to interact with the API. Here are some e
   ```
 
 - You can also use the link provided to perform the neccessary redirect
+
 ## Running Tests
 
 To run the automated tests for this project, execute:
