@@ -26,4 +26,17 @@ describe('UrlService', () => {
       expect(service.decode(urlPath)).toEqual(originalUrl);
     });
   });
+
+  describe('decode', () => {
+    it('should return the original URL for a known short URL', () => {
+      const originalUrl = 'http://example.com';
+      const shortUrl = service.encode(originalUrl);
+      const urlPath = shortUrl.replace('http://localhost:3000/', '');
+      expect(service.decode(urlPath)).toEqual(originalUrl);
+    });
+
+    it('should return null for an unknown short URL', () => {
+      expect(service.decode('unknown')).toBeNull();
+    });
+  });
 });

@@ -39,4 +39,25 @@ describe('AppController', () => {
       expect(urlService.encode).toHaveBeenCalledWith(url);
     });
   });
+
+  describe('decodeUrl', () => {
+    it('should return original URL if found', async () => {
+      const urlPath = 'abc123';
+      const originalUrl = 'http://example.com';
+      (urlService.decode as jest.Mock).mockReturnValue(originalUrl);
+
+      expect(await controller.decodeUrl(urlPath)).toEqual({ originalUrl });
+      expect(urlService.decode).toHaveBeenCalledWith(urlPath);
+    });
+
+    it('should return an error if URL not found', async () => {
+      const urlPath = 'unknown';
+      (urlService.decode as jest.Mock).mockReturnValue(null);
+
+      expect(await controller.decodeUrl(urlPath)).toEqual({
+        error: 'URL not found.',
+      });
+      expect(urlService.decode).toHaveBeenCalledWith(urlPath);
+    });
+  });
 });
