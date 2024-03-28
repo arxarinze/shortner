@@ -41,15 +41,15 @@ Before you begin, ensure you have the following installed on your system:
 
 1. Start the application in development mode:
 
-```bash
-npm run start:dev
-```
+   ```bash
+   npm run start:dev
+   ```
 
-### OR
+   ### OR
 
-```bash
-yarn run start:dev
-```
+   ```bash
+   yarn run start:dev
+   ```
 
 2. The service will be available at [http://localhost:3000](http://localhost:3000).
 
