@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { createHash, randomBytes } from 'crypto';
-import { UrlEntry } from './url.interface';
+import { AccessRecord, UrlEntry } from './url.interface';
 
 @Injectable()
 export class UrlService {
@@ -55,5 +55,23 @@ export class UrlService {
       };
     }
     return null;
+  }
+  recordAccess(
+    urlPath: string,
+    ipAddress: string,
+    country: string,
+    browser: string,
+  ): void {
+    const entry = this.urlDatabase[urlPath];
+    if (entry) {
+      const accessRecord: AccessRecord = {
+        ipAddress,
+        country,
+        browser,
+        timestamp: new Date(),
+      };
+      entry.accessRecords.push(accessRecord);
+      entry.accessCount += 1;
+    }
   }
 }

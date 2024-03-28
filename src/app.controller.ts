@@ -1,6 +1,18 @@
-import { Controller, Post, HttpCode, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpCode,
+  Body,
+  Get,
+  Param,
+  Redirect,
+  Req,
+} from '@nestjs/common';
 import { UrlService } from './url/url.service';
 import { CreateUrlDto, EncodedUrlDto } from './url/url.dto';
+import { Request } from 'express';
+import * as geoip from 'geoip-lite';
+import * as useragent from 'useragent';
 
 @Controller()
 export class AppController {
@@ -31,5 +43,27 @@ export class AppController {
       return { error: 'URL not found.' };
     }
     return stats;
+  }
+
+  @Get(':urlPath')
+  @Redirect()
+  async redirectToOriginalUrl(
+    @Param('urlPath') urlPath: string,
+    @Req() request: Request,
+  ) {
+    const originalUrl = this.urlService.decode(urlPath);
+    if (originalUrl) {
+      const ipAddress = request.ip || request.socket.remoteAddress;
+      const geo = geoip.lookup(ipAddress);
+      const country = geo?.country;
+      const ua = useragent.lookup(request.headers['user-agent']);
+      const browser = ua.family;
+
+      this.urlService.recordAccess(urlPath, ipAddress, country, browser);
+
+      return { url: originalUrl, statusCode: 302 };
+    }
+
+    return { url: '/error-page', statusCode: 404 };
   }
 }

@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UrlService } from './url/url.service';
 import { AppController } from './app.controller';
+import { Request } from 'express';
 describe('AppController', () => {
   let controller: AppController;
   let urlService: UrlService;
@@ -78,6 +79,51 @@ describe('AppController', () => {
         error: 'URL not found.',
       });
       expect(urlService.getStatistics).toHaveBeenCalledWith(urlPath);
+    });
+  });
+  describe('redirectToOriginalUrl', () => {
+    it('should redirect to the original URL if found', async () => {
+      const urlPath = 'abc123';
+      const originalUrl = 'http://example.com';
+      const requestMock = {
+        ip: '127.0.0.1',
+        socket: { remoteAddress: '127.0.0.1' },
+        headers: { 'user-agent': 'test-agent' },
+      } as unknown as Request;
+      (urlService.decode as jest.Mock).mockReturnValue(originalUrl);
+
+      const result = await controller.redirectToOriginalUrl(
+        urlPath,
+        requestMock,
+      );
+
+      expect(result).toEqual({ url: originalUrl, statusCode: 302 });
+      expect(urlService.decode).toHaveBeenCalledWith(urlPath);
+      expect(urlService.recordAccess).toHaveBeenCalledWith(
+        urlPath,
+        '127.0.0.1',
+        undefined,
+        'Other',
+      );
+    });
+
+    it('should redirect to an error page if URL not found', async () => {
+      const urlPath = 'unknown';
+      const requestMock = {
+        ip: '127.0.0.1',
+        socket: { remoteAddress: '127.0.0.1' },
+        headers: { 'user-agent': 'test-agent' },
+      } as unknown as Request;
+      (urlService.decode as jest.Mock).mockReturnValue(null);
+
+      const result = await controller.redirectToOriginalUrl(
+        urlPath,
+        requestMock,
+      );
+
+      expect(result).toEqual({ url: '/error-page', statusCode: 404 });
+      expect(urlService.decode).toHaveBeenCalledWith(urlPath);
+      expect(urlService.recordAccess).not.toHaveBeenCalled();
     });
   });
 });
