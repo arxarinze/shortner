@@ -1,73 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# URL Shortening Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a simple URL shortening service built with Node.js and NestJS. It allows users to shorten URLs, decode them back to their original form, and view statistics about URL usage.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Getting Started
 
-## Description
+### Prerequisites
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Before you begin, ensure you have the following installed on your system:
+- Node.js (v18.17.0 or later recommended)
+- npm (comes with Node.js)
 
-## Installation
+### Installation
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/arxarinze/shortner.git
+   cd shortner
+   ```
+
+2. Install the project dependencies:
+
+   ```bash
+   npm install
+   ```
+# OR
+
+    ```bash
+   yarn install
+   ```
+
+### Running the Application
+
+1. Start the application in development mode:
+
+   ```bash
+   npm run start:dev
+   ```
+
+# OR
+
+    ```bash
+   yarn run start:dev
+   ```
+
+2. The service will be available at [http://localhost:3000](http://localhost:3000).
+
+## API Endpoints
+
+The service provides the following endpoints:
+
+- **POST /url/encode**: Encodes a given URL to a shortened URL.
+  
+  **Body**: `{ "url": "https://example.com" }`
+  
+  **Response**: `{ "shortUrl": "http://short.est/abcd1234" }`
+
+- **GET /url/decode/:urlPath**: Decodes a shortened URL to its original URL.
+  
+  **Response**: `{ "originalUrl": "https://example.com" }`
+
+- **GET /url/statistic/:urlPath**: Returns statistics for a shortened URL.
+  
+  **Response**: `{ "originalUrl": "https://example.com", "accessCount": 5 }`
+
+- **GET /:urlPath**: Redirects to the original URL associated with the shortened path.
+
+### Using the API
+
+You can use tools like Postman or cURL to interact with the API. Here are some example cURL commands:
+
+- Encode a URL:
+
+  ```bash
+  curl -X POST http://localhost:3000/url/encode -H 'Content-Type: application/json' -d '{"url": "https://example.com"}'
+  ```
+
+- Decode a URL:
+
+  ```bash
+  curl http://localhost:3000/url/decode/abcd1234
+  ```
+
+- Get URL statistics:
+
+  ```bash
+  curl http://localhost:3000/url/statistic/abcd1234
+  ```
+
+- You can also use the link provided to perform the neccessary redirect
+## Running Tests
+
+To run the automated tests for this project, execute:
 
 ```bash
-$ yarn install
+npm run test
 ```
-
-## Running the app
-
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
