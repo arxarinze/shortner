@@ -26,6 +26,8 @@ Before you begin, ensure you have the following installed on your system:
    npm install
    ```
 
+   ### OR
+
    ```bash
    yarn install
    ```
@@ -36,7 +38,7 @@ Before you begin, ensure you have the following installed on your system:
 
 ```bash
 npm run start:dev
-````
+```
 
 ### OR
 
