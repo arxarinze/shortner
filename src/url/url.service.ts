@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { createHash, randomBytes } from 'crypto';
 import { AccessRecord, UrlEntry } from './url.interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UrlService {
+  constructor(private configService: ConfigService) {}
   private readonly urlDatabase: Record<string, UrlEntry> = {};
 
   private generateHash(input: string): string {
@@ -33,7 +35,7 @@ export class UrlService {
       }
     }
 
-    return `http://localhost:3000/${urlPath}`;
+    return `${this.configService.get<string>('BASE_URL')}/${urlPath}`;
   }
 
   decode(urlPath: string): string | null {

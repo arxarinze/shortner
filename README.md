@@ -36,15 +36,15 @@ Before you begin, ensure you have the following installed on your system:
 
 1. Start the application in development mode:
 
-  ```bash
-  npm run start:dev
-  ```
+```bash
+npm run start:dev
+```
 
-  ### OR
+### OR
 
-  ```bash
-  yarn run start:dev
-  ```
+```bash
+yarn run start:dev
+```
 
 2. The service will be available at [http://localhost:3000](http://localhost:3000).
 
@@ -90,7 +90,9 @@ You can use tools like Postman or cURL to interact with the API. Here are some e
   curl http://localhost:3000/url/statistic/abcd1234
   ```
 
-- You can also use the link provided to perform the neccessary redirect
+- You can also use the link provided in encode endpoint to perform the neccessary redirect
+
+- If deployed to a production server, .env file can be used to set the baseURL that will be returned during encoding
 
 ## Running Tests
 
